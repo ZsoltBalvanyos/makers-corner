@@ -1,0 +1,22 @@
+.avatar {
+    width: 100px;
+    height: 100px;
+    background: red;
+    border: black solid 1px;
+}
+
+.avatar img {
+    height: 100%;
+    width: 100%
+}
+
+.group {
+    float: left;
+    padding: 20px;
+}
+
+.groups {
+    width: 100%;
+    background: yellow;
+    float: left;
+}

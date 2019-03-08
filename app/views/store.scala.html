@@ -1,0 +1,55 @@
+
+@main("Store") {
+
+    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/store.css")"/>
+
+    <div class="container">
+        <div class="path" id="path"></div>
+        <div class="groups" id="groups"></div>
+    </div>
+
+
+    <script>
+
+        $(document).ready(function(){
+            getChildren(0)
+        });
+
+        function getChildren(groupId) {
+            var req = new XMLHttpRequest();
+            req.open("GET", "getChildren/" + groupId);
+
+            req.onreadystatechange = function(data) {
+                if (this.readyState == 4 && this.status == 200) {
+                    var parsed = JSON.parse(this.responseText)
+                    updateStore(parsed)
+                }
+            };
+
+            req.send();
+        }
+
+
+        function updateStore(groups) {
+            $("#groups").empty()
+            $("#path").append()
+            for(var item in groups) {
+                $("#groups").append(getGroup(groups[item]))
+            }
+        }
+
+        function getGroup(item) {
+            return '<div class="group" id="group">' + getAvatar(item) + getName(item.name) + '</div>'
+        }
+
+        function getAvatar(item) {
+            return '<div class="avatar" onclick="getChildren(' + item.groupId + ')"><img src="@routes.Assets.versioned("images/timber.jpg")"></div>'
+        }
+
+        function getName(name) {
+            return '<div>Name: ' + name + '</div>'
+        }
+
+
+    </script>
+}

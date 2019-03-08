@@ -1,0 +1,33 @@
+@main("Json Test") {
+
+
+    <div>
+        <button onclick="getJson()">press</button>
+    </div>
+
+    <div id="target"></div>
+
+    <script>
+        function getJson() {
+            var req = new XMLHttpRequest();
+            req.open("GET", "jsonData");
+
+            req.onreadystatechange = function(data) {
+                if (this.readyState == 4 && this.status == 200) {
+                    var parsed = JSON.parse(this.responseText)
+                    updateStore(parsed)
+                }
+            };
+
+            req.send();
+        }
+
+        function updateStore(groups) {
+            for(var item in groups) {
+                $("#target").append("<div>" + groups[item].name + "</div>")
+            }
+        }
+
+    </script>
+
+}

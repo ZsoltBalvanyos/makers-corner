@@ -1,17 +1,38 @@
+import Dependencies._
+import play.sbt.PlayImport.specs2
+import sbtassembly.AssemblyPlugin.autoImport.assemblyMergeStrategy
+
 name := "makers-corner"
- 
-version := "1.0" 
-      
-lazy val `makerscorner` = (project in file(".")).enablePlugins(PlayScala)
 
-resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
-      
-resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
-      
-scalaVersion := "2.12.2"
+version := "1.0"
 
-libraryDependencies ++= Seq( jdbc , ehcache , ws , specs2 % Test , guice )
+scalaVersion := "2.12.4"
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+enablePlugins(PlayScala)
 
-      
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", _) => MergeStrategy.discard
+  case _                       => MergeStrategy.first
+}
+
+libraryDependencies ++= Seq(
+  ehcache,
+  guice,
+  h2,
+  mysql,
+  postgresql,
+  pgSlick,
+  typeSafeConfig,
+  fs2.core,
+  Circe.core,
+  Circe.generic,
+  Circe.parser,
+  Circe.shapes,
+  Cats.core,
+  PlaySlick.slick,
+  PlaySlick.slickEvolutions,
+  specs2 % Test,
+  scalaTest,
+  scalaCheck,
+  scalaCheckShapeless
+)
